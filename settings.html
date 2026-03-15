@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Paramètres ⚙️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #fff0f5 0%, #ffe0ec 100%);
+      font-family: 'Lato', sans-serif;
+      padding: 40px 20px 80px;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .page-title h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      color: #3d1a26;
+      font-style: italic;
+      margin-bottom: 6px;
+    }
+
+    .page-title p {
+      color: #9b6070;
+      font-weight: 300;
+      font-size: 15px;
+    }
+
+    .settings-layout {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media(max-width:650px) {
+      .settings-layout { grid-template-columns: 1fr; }
+    }
+
+    .settings-card {
+      background: white;
+      border-radius: 22px;
+      padding: 28px;
+      border: 1px solid #fde0eb;
+      box-shadow: 0 4px 20px rgba(200,80,120,0.08);
+    }
+
+    .settings-card.full { grid-column: 1 / -1; }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #fde0eb;
+    }
+
+    .card-header .card-icon {
+      width: 40px; height: 40px;
+      background: #fde8ef;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+
+    .card-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      color: #3d1a26;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid #fdf0f4;
+    }
+
+    .setting-row:last-child { border-bottom: none; }
+
+    .setting-label {
+      font-size: 14px;
+      color: #3d1a26;
+      font-weight: 400;
+    }
+
+    .setting-sub {
+      font-size: 12px;
+      color: #b08090;
+      font-weight: 300;
+      margin-top: 2px;
+    }
+
+    input[type="color"] {
+      width: 44px; height: 36px;
+      border: 2px solid #fde0eb;
+      border-radius: 8px;
+      cursor: pointer;
+      background: none;
+      padding: 2px;
+    }
+
+    input[type="range"] {
+      width: 120px;
+      accent-color: #e8547a;
+    }
+
+    select {
+      padding: 8px 12px;
+      border: 1px solid #fde0eb;
+      border-radius: 10px;
+      background: white;
+      color: #3d1a26;
+      font-size: 13px;
+      outline: none;
+      cursor: pointer;
+      font-family: 'Lato', sans-serif;
+    }
+
+    select:focus { border-color: #e8547a; }
+
+    input[type="text"] {
+      padding: 8px 12px;
+      border: 1px solid #fde0eb;
+      border-radius: 10px;
+      background: white;
+      color: #3d1a26;
+      font-size: 13px;
+      outline: none;
+      width: 200px;
+      font-family: 'Lato', sans-serif;
+    }
+
+    input[type="text"]:focus { border-color: #e8547a; }
+
+    /* Toggle switch */
+    .toggle {
+      position: relative;
+      width: 48px; height: 26px;
+      cursor: pointer;
+    }
+
+    .toggle input { opacity: 0; width: 0; height: 0; }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: #fde0eb;
+      border-radius: 26px;
+      transition: 0.3s;
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      left: 3px; top: 3px;
+      width: 20px; height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .toggle input:checked + .toggle-slider { background: #e8547a; }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(22px); }
+
+    /* Preview */
+    .preview-box {
+      background: linear-gradient(135deg, #fff0f5, #fde0eb);
+      border-radius: 14px;
+      padding: 24px;
+      text-align: center;
+      border: 1px dashed #f5b0c8;
+      transition: all 0.4s;
+    }
+
+    .preview-box p {
+      font-size: 18px;
+      color: #3d1a26;
+      font-style: italic;
+      transition: all 0.3s;
+    }
+
+    /* Reset button */
+    .reset-btn {
+      display: block;
+      margin: 30px auto 0;
+      padding: 13px 36px;
+      background: white;
+      border: 2px solid #e8547a;
+      color: #e8547a;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .reset-btn:hover {
+      background: #e8547a;
+      color: white;
+    }
+
+    .back-btn {
+      position: fixed;
+      top: 24px; left: 24px;
+      background: white;
+      border: none;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(200,80,120,0.2);
+      z-index: 100;
+      text-decoration: none;
+      color: #e8547a;
+      font-size: 18px;
+      transition: all 0.3s;
+    }
+    .back-btn:hover { transform: scale(1.1); }
+  </style>
+</head>
+<body>
+
+  <a href="menu.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+
+  <div class="page-title">
+    <h1>⚙️ Paramètres</h1>
+    <p>Personnalise le site à ton goût, mon amour</p>
+  </div>
+
+  <div class="settings-layout">
+
+    <!-- Couleurs -->
+    <div class="settings-card">
+      <div class="card-header">
+        <div class="card-icon">🎨</div>
+        <h3>Couleurs</h3>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <p class="setting-label">Couleur du fond</p>
+          <p class="setting-sub">Arrière-plan de la page</p>
+        </div>
+        <input type="color" id="bgColor" value="#fff0f5">
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <p class="setting-label">Couleur principale</p>
+          <p class="setting-sub">Boutons et accents</p>
+        </div>
+        <input type="color" id="accentColor" value="#e8547a">
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <p class="setting-label">Couleur du texte</p>
+        </div>
+        <input type="color" id="textColor" value="#3d1a26">
+      </div>
+    </div>
+
+    <!-- Typographie -->
+    <div class="settings-card">
+      <div class="card-header">
+        <div class="card-icon">✍️</div>
+        <h3>Typographie</h3>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <p class="setting-label">Police</p>
+        </div>
+        <select id="fontFamily">
+          <option value="'Lato', sans-serif">Lato (défaut)</option>
+          <option value="'Playfair Display', serif">Playfair Display</option>
+          <option value="Georgia, serif">Georgia</option>
+          <option value="'Courier New', monospace">Courier New</option>
+          <option value="Verdana, sans-serif">Verdana</option>
+        </select>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <p class="setting-label">Taille du texte</p>
+        </div>
+        <select id="fontSize">
+          <option value="14px">Petit</option>
+          <option value="16px" selected>Normal</option>
+          <option value="19px">Grand</option>
+          <option value="22px">Très grand</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Fond -->
+    <div class="settings-card">
+      <div class="card-header">
+        <div class="card-icon">🖼️</div>
+        <h3>Image de fond</h3>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <p class="setting-label">URL de l'image</p>
+          <p class="setting-sub">Colle un lien d'image</p>
+        </div>
+        <input type="text" id="bgImage" placeholder="https://...">
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <p class="setting-label">Effacer l'image</p>
+        </div>
+        <button onclick="document.getElementById('bgImage').value=''; applyBg();" style="padding:8px 14px;background:#fde0eb;border:none;border-radius:8px;color:#c0325a;cursor:pointer;font-weight:700;">✕ Effacer</button>
+      </div>
+    </div>
+
+    <!-- Effets -->
+    <div class="settings-card">
+      <div class="card-header">
+        <div class="card-icon">✨</div>
+        <h3>Effets</h3>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <p class="setting-label">Cœurs flottants</p>
+          <p class="setting-sub">Animation en arrière-plan</p>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="heartsToggle" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <p class="setting-label">Intensité de l'ombre</p>
+        </div>
+        <input type="range" min="0" max="40" id="shadowRange" value="0">
+      </div>
+    </div>
+
+    <!-- Preview -->
+    <div class="settings-card full">
+      <div class="card-header">
+        <div class="card-icon">👁️</div>
+        <h3>Aperçu</h3>
+      </div>
+      <div class="preview-box" id="previewBox">
+        <p id="previewText">Voici à quoi ressemble le texte avec tes réglages 💕</p>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="reset-btn" onclick="resetAll()">🔄 Réinitialiser les paramètres</button>
+
+  <script>
+    document.getElementById('bgColor').addEventListener('input', e => {
+      document.body.style.background = e.target.value;
+    });
+
+    document.getElementById('accentColor').addEventListener('input', e => {
+      document.querySelectorAll('input[type=color]').forEach(el => {
+        el.style.accentColor = e.target.value;
+      });
+    });
+
+    document.getElementById('textColor').addEventListener('input', e => {
+      document.getElementById('previewText').style.color = e.target.value;
+    });
+
+    document.getElementById('fontFamily').addEventListener('change', e => {
+      document.getElementById('previewText').style.fontFamily = e.target.value;
+    });
+
+    document.getElementById('fontSize').addEventListener('change', e => {
+      document.getElementById('previewText').style.fontSize = e.target.value;
+    });
+
+    document.getElementById('bgImage').addEventListener('input', applyBg);
+    function applyBg() {
+      const url = document.getElementById('bgImage').value.trim();
+      if(url) {
+        document.body.style.backgroundImage = `url('${url}')`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+      } else {
+        document.body.style.backgroundImage = '';
+        document.body.style.background = 'linear-gradient(160deg, #fff0f5 0%, #ffe0ec 100%)';
+      }
+    }
+
+    document.getElementById('shadowRange').addEventListener('input', e => {
+      document.getElementById('previewBox').style.boxShadow = `0 0 ${e.target.value}px rgba(200,80,120,0.3)`;
+    });
+
+    function resetAll() {
+      document.getElementById('bgColor').value = '#fff0f5';
+      document.getElementById('accentColor').value = '#e8547a';
+      document.getElementById('textColor').value = '#3d1a26';
+      document.getElementById('fontFamily').value = "'Lato', sans-serif";
+      document.getElementById('fontSize').value = '16px';
+      document.getElementById('bgImage').value = '';
+      document.getElementById('shadowRange').value = 0;
+      document.body.style.cssText = '';
+      document.body.style.minHeight = '100vh';
+      document.body.style.background = 'linear-gradient(160deg, #fff0f5 0%, #ffe0ec 100%)';
+      document.body.style.fontFamily = "'Lato', sans-serif";
+      document.body.style.padding = '40px 20px 80px';
+      document.getElementById('previewText').style = '';
+      document.getElementById('previewBox').style.boxShadow = '';
+    }
+  </script>
+</body>
+</html>

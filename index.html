@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Notre Monde 💖</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose: #e8547a;
+      --rose-pale: #f7a8be;
+      --rose-doux: #fde8ef;
+      --rose-profond: #c0325a;
+      --creme: #fff6f9;
+      --texte: #3d1a26;
+    }
+
+    body, html {
+      height: 100vh;
+      font-family: 'Lato', sans-serif;
+      background: var(--creme);
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* ---- SIDEBAR ---- */
+    .sidebar {
+      width: 240px;
+      min-width: 240px;
+      background: linear-gradient(180deg, #e8547a 0%, #c0325a 100%);
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: -60px;
+      width: 200px; height: 200px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+
+    .sidebar::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; right: -80px;
+      width: 250px; height: 250px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+
+    .sidebar-logo {
+      padding: 35px 25px 25px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      position: relative;
+      z-index: 1;
+    }
+
+    .sidebar-logo .heart-icon {
+      font-size: 32px;
+      display: block;
+      margin-bottom: 8px;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.15); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.1); }
+      70% { transform: scale(1); }
+    }
+
+    .sidebar-logo span {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: white;
+      font-size: 18px;
+      opacity: 0.95;
+    }
+
+    .sidebar nav {
+      padding: 20px 15px;
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 13px 18px;
+      text-decoration: none;
+      color: rgba(255,255,255,0.9);
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+      transition: all 0.25s;
+      border-radius: 12px;
+      margin-bottom: 4px;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .sidebar a.active {
+      background: rgba(255,255,255,0.25);
+      color: white;
+      font-weight: 700;
+    }
+
+    .sidebar a i {
+      width: 20px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .sidebar-footer {
+      padding: 20px 25px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      font-style: italic;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ---- CONTENT ---- */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    /* Pétales de fond */
+    .petals-bg {
+      position: fixed;
+      top: 0; right: 0;
+      width: calc(100vw - 240px);
+      height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .petal {
+      position: absolute;
+      font-size: 18px;
+      opacity: 0.12;
+      animation: petalFall linear infinite;
+    }
+
+    @keyframes petalFall {
+      0% { transform: translateY(-30px) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.15; }
+      90% { opacity: 0.1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 70px 60px 50px;
+    }
+
+    .hero-label {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--rose);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      color: var(--texte);
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    .hero h1 span {
+      color: var(--rose);
+      font-style: italic;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: #7a4458;
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 520px;
+      margin-top: 18px;
+    }
+
+    .hero-divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--rose), var(--rose-pale));
+      border-radius: 2px;
+      margin: 28px 0;
+    }
+
+    /* Cards grid */
+    .cards-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      padding: 0 60px 60px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 28px;
+      border: 1px solid #f5d0dc;
+      box-shadow: 0 4px 20px rgba(200, 80, 120, 0.08);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--rose), var(--rose-pale));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 35px rgba(200, 80, 120, 0.15);
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card-icon {
+      width: 50px; height: 50px;
+      background: var(--rose-doux);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--texte);
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #9b6070;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* Compteur */
+    .counter-section {
+      position: relative;
+      z-index: 1;
+      margin: 0 60px 40px;
+      background: linear-gradient(135deg, var(--rose) 0%, var(--rose-profond) 100%);
+      border-radius: 24px;
+      padding: 36px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      overflow: hidden;
+    }
+
+    .counter-section::before {
+      content: '💕';
+      position: absolute;
+      right: 30px; top: 15px;
+      font-size: 80px;
+      opacity: 0.15;
+    }
+
+    .counter-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      color: white;
+      margin-bottom: 6px;
+    }
+
+    .counter-text p {
+      color: rgba(255,255,255,0.75);
+      font-size: 14px;
+      font-weight: 300;
+    }
+
+    .counter-numbers {
+      display: flex;
+      gap: 20px;
+    }
+
+    .counter-block {
+      text-align: center;
+      background: rgba(255,255,255,0.15);
+      padding: 16px 22px;
+      border-radius: 14px;
+      min-width: 70px;
+    }
+
+    .counter-block .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: white;
+      line-height: 1;
+      display: block;
+    }
+
+    .counter-block .lbl {
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+      margin-top: 5px;
+    }
+
+    /* Message du jour */
+    .quote-section {
+      position: relative;
+      z-index: 1;
+      margin: 0 60px 60px;
+      padding: 32px 36px;
+      background: white;
+      border-radius: 20px;
+      border: 1px solid #f5d0dc;
+      box-shadow: 0 4px 20px rgba(200, 80, 120, 0.08);
+    }
+
+    .quote-section .quote-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--rose-pale);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .quote-section blockquote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: var(--texte);
+      line-height: 1.6;
+      border-left: 3px solid var(--rose-pale);
+      padding-left: 20px;
+    }
+
+    .quote-section .quote-author {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--rose-pale);
+      text-align: right;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    /* Scrollbar */
+    .content::-webkit-scrollbar { width: 5px; }
+    .content::-webkit-scrollbar-track { background: var(--rose-doux); }
+    .content::-webkit-scrollbar-thumb { background: var(--rose-pale); border-radius: 10px; }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <span class="heart-icon">💖</span>
+      <span>Notre Monde</span>
+    </div>
+    <nav>
+      <a href="menu.html" class="active"><i class="fa-solid fa-house"></i> Accueil</a>
+      <a href="you.html"><i class="fa-solid fa-heart"></i> Pour toi</a>
+      <a href="photos.html"><i class="fa-regular fa-images"></i> Nos souvenirs</a>
+      <a href="tableau.html"><i class="fa-solid fa-calendar-heart"></i> Notre histoire</a>
+      <a href="lettre.html"><i class="fa-regular fa-envelope-open-text"></i> Lettre d'amour</a>
+      <a href="secret.html"><i class="fa-solid fa-lock"></i> Secret 🔐</a>
+      <a href="settings.html"><i class="fa-solid fa-gear"></i> Paramètres</a>
+    </nav>
+    <div class="sidebar-footer">Fait avec tout mon amour 💕</div>
+  </div>
+
+  <div class="petals-bg" id="petalsBg"></div>
+
+  <div class="content">
+
+    <div class="hero">
+      <p class="hero-label">Bienvenue dans</p>
+      <h1>Notre <span>petit monde</span> à nous</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">
+        Mon petit cœur, ce site c'est pour toi. Chaque page, chaque mot, chaque détail — tout a été pensé pour te montrer combien tu comptes pour moi. 💕
+      </p>
+    </div>
+
+    <div class="counter-section">
+      <div class="counter-text">
+        <h2>Ensemble depuis le 17 Septembre 2025</h2>
+        <p>Chaque jour avec toi est un cadeau</p>
+      </div>
+      <div class="counter-numbers" id="counterNums">
+        <div class="counter-block">
+          <span class="num" id="cntJours">0</span>
+          <span class="lbl">Jours</span>
+        </div>
+        <div class="counter-block">
+          <span class="num" id="cntHeures">0</span>
+          <span class="lbl">Heures</span>
+        </div>
+        <div class="counter-block">
+          <span class="num" id="cntMins">0</span>
+          <span class="lbl">Minutes</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <a href="you.html" class="card">
+        <div class="card-icon">💕</div>
+        <h3>Pour toi</h3>
+        <p>Un message venant du fond de mon cœur, rien que pour toi mon amour.</p>
+      </a>
+      <a href="tableau.html" class="card">
+        <div class="card-icon">📅</div>
+        <h3>Notre histoire</h3>
+        <p>Nos mois ensemble, nos dates importantes, nos souvenirs marqués à jamais.</p>
+      </a>
+      <a href="lettre.html" class="card">
+        <div class="card-icon">💌</div>
+        <h3>Lettre d'amour</h3>
+        <p>Ce que les mots peinent parfois à dire, je te l'écris ici avec tout mon cœur.</p>
+      </a>
+      <a href="secret.html" class="card">
+        <div class="card-icon">🔐</div>
+        <h3>Boîte secrète</h3>
+        <p>Une surprise cachée rien que pour toi. Tu connais le mot magique ?</p>
+      </a>
+    </div>
+
+    <div class="quote-section">
+      <p class="quote-label">Citation du jour</p>
+      <blockquote id="quoteText">
+        "L'amour, ce n'est pas se regarder l'un l'autre, c'est regarder ensemble dans la même direction."
+      </blockquote>
+      <p class="quote-author">— Antoine de Saint-Exupéry</p>
+    </div>
+
+  </div>
+
+  <script>
+    // Compteur depuis le 17/09/2025
+    function updateCounter() {
+      const start = new Date('2025-09-17T00:00:00');
+      const now = new Date();
+      const diff = now - start;
+      const jours = Math.floor(diff / (1000*60*60*24));
+      const heures = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+      document.getElementById('cntJours').textContent = jours;
+      document.getElementById('cntHeures').textContent = heures;
+      document.getElementById('cntMins').textContent = mins;
+    }
+    updateCounter();
+    setInterval(updateCounter, 30000);
+
+    // Pétales
+    const petalsBg = document.getElementById('petalsBg');
+    const emojis = ['🌸','💗','🌺','💕','❤️','🌹','💖'];
+    function createPetal() {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      p.style.left = Math.random()*100 + '%';
+      p.style.fontSize = (12 + Math.random()*14) + 'px';
+      const dur = 12 + Math.random()*10;
+      p.style.animationDuration = dur + 's';
+      p.style.animationDelay = Math.random()*5 + 's';
+      petalsBg.appendChild(p);
+      setTimeout(() => p.remove(), (dur+5)*1000);
+    }
+    for(let i=0; i<8; i++) createPetal();
+    setInterval(createPetal, 2000);
+
+    // Citations aléatoires
+    const quotes = [
+      { text: "L'amour, ce n'est pas se regarder l'un l'autre, c'est regarder ensemble dans la même direction.", author: "Antoine de Saint-Exupéry" },
+      { text: "Je t'aime non pas pour ce que tu es, mais pour ce que je suis quand je suis avec toi.", author: "Roy Croft" },
+      { text: "On n'aime bien qu'une seule fois, c'est la première fois. Les amours qui suivent sont moins involontaires.", author: "La Bruyère" },
+      { text: "Aimer c'est trouver dans le bonheur d'un autre son propre bonheur.", author: "Leibniz" },
+      { text: "Le plus grand bonheur de la vie, c'est la conviction qu'on est aimé.", author: "Victor Hugo" }
+    ];
+    const q = quotes[Math.floor(Math.random()*quotes.length)];
+    document.getElementById('quoteText').textContent = '"' + q.text + '"';
+    document.querySelector('.quote-author').textContent = '— ' + q.author;
+  </script>
+</body>
+</html>
