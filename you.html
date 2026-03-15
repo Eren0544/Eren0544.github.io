@@ -2,262 +2,70 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pour toi, Manon 💕</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { min-height: 100vh; background: #fff0f5; font-family: 'Lato', sans-serif; overflow-x: hidden; }
 
-    body {
-      min-height: 100vh;
-      background: #fff0f5;
-      font-family: 'Lato', sans-serif;
-      overflow-x: hidden;
+    /* HERO */
+    .hero { background:linear-gradient(135deg,#e8547a 0%,#c0325a 60%,#8b1a3a 100%); padding:80px 60px; position:relative; overflow:hidden; min-height:55vh; display:flex; align-items:center; }
+    .hero::before { content:'💕'; position:absolute; top:-30px; right:-20px; font-size:340px; opacity:0.06; line-height:1; }
+    .hero-floating { position:absolute; top:0; left:0; right:0; bottom:0; pointer-events:none; }
+    .fheart { position:absolute; animation:floatHeart linear infinite; opacity:0; }
+    @keyframes floatHeart { 0%{transform:translateY(110%) scale(0.5);opacity:0} 15%{opacity:0.4} 85%{opacity:0.3} 100%{transform:translateY(-20px) scale(1);opacity:0} }
+    .hero-content { position:relative; z-index:1; max-width:650px; }
+    .hero-eyebrow { font-size:11px; letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,0.65); margin-bottom:18px; font-weight:700; }
+    .hero h1 { font-family:'Playfair Display',serif; font-size:64px; font-style:italic; color:white; line-height:1.1; text-shadow:0 4px 30px rgba(0,0,0,0.2); margin-bottom:24px; }
+    .hero-desc { font-size:17px; color:rgba(255,255,255,0.82); line-height:1.75; font-weight:300; }
+
+    /* LETTER */
+    .letter-section { max-width:820px; margin:-40px auto 0; padding:0 30px 80px; position:relative; z-index:5; }
+    .letter-card { background:white; border-radius:28px; padding:60px; box-shadow:0 20px 60px rgba(200,80,120,0.12); border:1px solid #fde0eb; position:relative; }
+    .letter-card::before { content:'"'; position:absolute; top:20px; left:40px; font-family:'Playfair Display',serif; font-size:120px; color:#fde0eb; line-height:1; }
+    .letter-date { font-size:12px; letter-spacing:2px; text-transform:uppercase; color:#e8547a; font-weight:700; margin-bottom:30px; }
+    .letter-card p { font-size:17px; line-height:2; color:#3d1a26; font-weight:300; margin-bottom:22px; }
+    .letter-card p strong { color:#c0325a; font-weight:700; }
+    .letter-signature { margin-top:40px; padding-top:30px; border-top:1px solid #fde0eb; display:flex; align-items:center; justify-content:flex-end; gap:16px; }
+    .letter-signature .sig-text { font-family:'Playfair Display',serif; font-style:italic; font-size:22px; color:#c0325a; text-align:right; }
+    .heart-beat { font-size:36px; animation:hb 1.5s ease-in-out infinite; }
+    @keyframes hb { 0%,100%{transform:scale(1)} 14%{transform:scale(1.2)} 28%{transform:scale(1)} 42%{transform:scale(1.1)} }
+
+    /* REASONS */
+    .reasons-section { background:linear-gradient(135deg,#e8547a,#c0325a); padding:70px 60px; }
+    .reasons-section h2 { font-family:'Playfair Display',serif; font-size:40px; color:white; text-align:center; margin-bottom:10px; font-style:italic; }
+    .reasons-sub { text-align:center; color:rgba(255,255,255,0.7); font-size:15px; margin-bottom:50px; font-weight:300; }
+    .reasons-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; max-width:1000px; margin:0 auto; }
+    .reason-card { background:rgba(255,255,255,0.12); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.25); border-radius:18px; padding:28px 24px; color:white; transition:all 0.3s; }
+    .reason-card:hover { background:rgba(255,255,255,0.2); transform:translateY(-4px); }
+    .reason-card .reason-icon { font-size:28px; margin-bottom:12px; display:block; }
+    .reason-card h4 { font-size:16px; font-weight:700; margin-bottom:8px; }
+    .reason-card p { font-size:13px; color:rgba(255,255,255,0.75); line-height:1.6; font-weight:300; }
+
+    /* BACK BTN */
+    .back-btn { position:fixed; top:24px; left:24px; background:white; border:none; width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 15px rgba(200,80,120,0.2); transition:all 0.3s; z-index:100; text-decoration:none; color:#e8547a; font-size:18px; }
+    .back-btn:hover { transform:scale(1.1); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .back-btn { top: 10px; left: 10px; width: 40px; height: 40px; font-size: 15px; }
+      .hero { padding: 60px 20px 40px; min-height: 45vh; }
+      .hero h1 { font-size: 40px; }
+      .hero-desc { font-size: 15px; }
+      .letter-section { padding: 0 14px 50px; margin-top: -20px; }
+      .letter-card { padding: 30px 22px; }
+      .letter-card::before { font-size: 70px; }
+      .letter-card p { font-size: 15px; }
+      .letter-signature .sig-text { font-size: 18px; }
+      .reasons-section { padding: 50px 16px; }
+      .reasons-section h2 { font-size: 30px; }
+      .reasons-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
     }
-
-    /* ---- HERO ---- */
-    .hero {
-      background: linear-gradient(135deg, #e8547a 0%, #c0325a 60%, #8b1a3a 100%);
-      padding: 80px 60px;
-      position: relative;
-      overflow: hidden;
-      min-height: 55vh;
-      display: flex;
-      align-items: center;
-    }
-
-    .hero::before {
-      content: '💕';
-      position: absolute;
-      top: -30px; right: -20px;
-      font-size: 340px;
-      opacity: 0.06;
-      line-height: 1;
-    }
-
-    .hero-floating {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none;
-    }
-
-    .fheart {
-      position: absolute;
-      animation: floatHeart linear infinite;
-      opacity: 0;
-    }
-
-    @keyframes floatHeart {
-      0% { transform: translateY(110%) scale(0.5); opacity: 0; }
-      15% { opacity: 0.4; }
-      85% { opacity: 0.3; }
-      100% { transform: translateY(-20px) scale(1); opacity: 0; }
-    }
-
-    .hero-content { position: relative; z-index: 1; max-width: 650px; }
-
-    .hero-eyebrow {
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 18px;
-      font-weight: 700;
-    }
-
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 64px;
-      font-style: italic;
-      color: white;
-      line-height: 1.1;
-      text-shadow: 0 4px 30px rgba(0,0,0,0.2);
-      margin-bottom: 24px;
-    }
-
-    .hero-desc {
-      font-size: 17px;
-      color: rgba(255,255,255,0.82);
-      line-height: 1.75;
-      font-weight: 300;
-    }
-
-    /* ---- LETTER ---- */
-    .letter-section {
-      max-width: 820px;
-      margin: -40px auto 0;
-      padding: 0 30px 80px;
-      position: relative;
-      z-index: 5;
-    }
-
-    .letter-card {
-      background: white;
-      border-radius: 28px;
-      padding: 60px;
-      box-shadow: 0 20px 60px rgba(200,80,120,0.12);
-      border: 1px solid #fde0eb;
-      position: relative;
-    }
-
-    .letter-card::before {
-      content: '"';
-      position: absolute;
-      top: 20px; left: 40px;
-      font-family: 'Playfair Display', serif;
-      font-size: 120px;
-      color: #fde0eb;
-      line-height: 1;
-    }
-
-    .letter-date {
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #e8547a;
-      font-weight: 700;
-      margin-bottom: 30px;
-    }
-
-    .letter-card p {
-      font-size: 17px;
-      line-height: 2;
-      color: #3d1a26;
-      font-weight: 300;
-      margin-bottom: 22px;
-    }
-
-    .letter-card p strong {
-      color: #c0325a;
-      font-weight: 700;
-    }
-
-    .letter-signature {
-      margin-top: 40px;
-      padding-top: 30px;
-      border-top: 1px solid #fde0eb;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 16px;
-    }
-
-    .letter-signature .sig-text {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 22px;
-      color: #c0325a;
-      text-align: right;
-    }
-
-    .heart-beat {
-      font-size: 36px;
-      animation: hb 1.5s ease-in-out infinite;
-    }
-
-    @keyframes hb {
-      0%,100% { transform: scale(1); }
-      14% { transform: scale(1.2); }
-      28% { transform: scale(1); }
-      42% { transform: scale(1.1); }
-    }
-
-    /* ---- REASONS ---- */
-    .reasons-section {
-      background: linear-gradient(135deg, #e8547a, #c0325a);
-      padding: 70px 60px;
-    }
-
-    .reasons-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 40px;
-      color: white;
-      text-align: center;
-      margin-bottom: 10px;
-      font-style: italic;
-    }
-
-    .reasons-sub {
-      text-align: center;
-      color: rgba(255,255,255,0.7);
-      font-size: 15px;
-      margin-bottom: 50px;
-      font-weight: 300;
-    }
-
-    .reasons-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .reason-card {
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 18px;
-      padding: 28px 24px;
-      color: white;
-      transition: all 0.3s;
-    }
-
-    .reason-card:hover {
-      background: rgba(255,255,255,0.2);
-      transform: translateY(-4px);
-    }
-
-    .reason-card .reason-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 48px;
-      font-style: italic;
-      color: rgba(255,255,255,0.2);
-      line-height: 1;
-      margin-bottom: 12px;
-    }
-
-    .reason-card .reason-icon {
-      font-size: 28px;
-      margin-bottom: 12px;
-      display: block;
-    }
-
-    .reason-card h4 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .reason-card p {
-      font-size: 13px;
-      color: rgba(255,255,255,0.75);
-      line-height: 1.6;
-      font-weight: 300;
-    }
-
-    /* ---- BACK BTN ---- */
-    .back-btn {
-      position: fixed;
-      top: 24px; left: 24px;
-      background: white;
-      border: none;
-      width: 46px; height: 46px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(200,80,120,0.2);
-      transition: all 0.3s;
-      z-index: 100;
-      text-decoration: none;
-      color: #e8547a;
-      font-size: 18px;
-    }
-
-    .back-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(200,80,120,0.3);
+    @media (max-width: 450px) {
+      .hero h1 { font-size: 32px; }
+      .reasons-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -270,28 +78,19 @@
     <div class="hero-content">
       <p class="hero-eyebrow">Une page rien que pour toi</p>
       <h1>Je t'aime,<br>Manon.</h1>
-      <p class="hero-desc">
-        Ces mots ne seront jamais assez grands pour contenir ce que je ressens. Mais j'essaie quand même, parce que tu mérites tout.
-      </p>
+      <p class="hero-desc">Ces mots ne seront jamais assez grands pour contenir ce que je ressens. Mais j'essaie quand même, parce que tu mérites tout.</p>
     </div>
   </div>
 
   <div class="letter-section">
     <div class="letter-card">
       <p class="letter-date">Septembre 2025 — Pour toujours</p>
-
       <p>Mon petit cœur, <strong>chaque moment avec toi est précieux</strong>, doux et si important. Ta vie m'apporte plus que la mienne ne me donnera jamais. Je t'aime et tout ça pour toute la vie.</p>
-
       <p>J'ai juste besoin de vivre avec toi à tes côtés jusqu'à la fin. <strong>Je ne rêve que de toi.</strong> Ton cœur est si pur avec moi que je pourrais juste te regarder des heures et des heures jusqu'à me noyer dans tes beaux yeux si beaux.</p>
-
       <p>L'amour que j'apporte pour toi est bien différent de celui que tu penses. Il est sincère. Même dans nos moments difficiles, ça sera toujours la même chose — et ça pour la vie. <strong>Je veux qu'on puisse aller loin ensemble</strong>, bien plus loin que nos deux premiers mois.</p>
-
       <p>Chaque jour avec toi est rempli de bonheur et de soulagement. Tu ne te rends pas compte de ce que je peux faire pour toi. <strong>Sache que je ne veux que toi.</strong> Je ne pourrai jamais imaginer ma vie sans toi.</p>
-
       <p>Je veux qu'on continue ensemble. Que tu sois la mère de mes enfants et bien plus. <strong>Tu mérites bien plus que tout au monde.</strong> J'aime te rendre heureuse — c'est mon but principal dans la vie.</p>
-
       <p>Toi et moi c'est pour la vie. Il n'y a plus de marche arrière. <strong>Manon Huet — je t'aime et ça pour toujours.</strong> Même avec nos difficultés, on avancera petit à petit jusqu'à se voir et vivre notre vie ensemble. C'est si essentiel pour moi, mon cœur.</p>
-
       <div class="letter-signature">
         <div class="sig-text">Je t'aime, pour la vie ❤️</div>
         <span class="heart-beat">💖</span>
@@ -303,57 +102,28 @@
     <h2>Pourquoi je t'aime</h2>
     <p class="reasons-sub">Il y en a des milliers, en voilà quelques-uns…</p>
     <div class="reasons-grid">
-      <div class="reason-card">
-        <span class="reason-icon">😊</span>
-        <h4>Ton sourire</h4>
-        <p>Il illumine mes journées les plus sombres et me rappelle pourquoi je suis en vie.</p>
-      </div>
-      <div class="reason-card">
-        <span class="reason-icon">💛</span>
-        <h4>Ton cœur pur</h4>
-        <p>Ta gentillesse et ta douceur avec moi me touchent chaque jour un peu plus profondément.</p>
-      </div>
-      <div class="reason-card">
-        <span class="reason-icon">✨</span>
-        <h4>Ta force</h4>
-        <p>Tu es forte d'une façon que tu ne vois peut-être pas, mais moi je la vois chaque jour.</p>
-      </div>
-      <div class="reason-card">
-        <span class="reason-icon">🌙</span>
-        <h4>Mes pensées</h4>
-        <p>Tu es la dernière chose à laquelle je pense le soir et la première le matin.</p>
-      </div>
-      <div class="reason-card">
-        <span class="reason-icon">🤝</span>
-        <h4>Notre complicité</h4>
-        <p>Ce lien invisible qui nous unit et qui rend chaque moment ensemble si naturel et si beau.</p>
-      </div>
-      <div class="reason-card">
-        <span class="reason-icon">🔮</span>
-        <h4>Notre avenir</h4>
-        <p>Quand je pense à demain, à après-demain — c'est toujours avec toi que je le visualise.</p>
-      </div>
+      <div class="reason-card"><span class="reason-icon">😊</span><h4>Ton sourire</h4><p>Il illumine mes journées les plus sombres et me rappelle pourquoi je suis en vie.</p></div>
+      <div class="reason-card"><span class="reason-icon">💛</span><h4>Ton cœur pur</h4><p>Ta gentillesse et ta douceur avec moi me touchent chaque jour un peu plus profondément.</p></div>
+      <div class="reason-card"><span class="reason-icon">✨</span><h4>Ta force</h4><p>Tu es forte d'une façon que tu ne vois peut-être pas, mais moi je la vois chaque jour.</p></div>
+      <div class="reason-card"><span class="reason-icon">🌙</span><h4>Mes pensées</h4><p>Tu es la dernière chose à laquelle je pense le soir et la première le matin.</p></div>
+      <div class="reason-card"><span class="reason-icon">🤝</span><h4>Notre complicité</h4><p>Ce lien invisible qui nous unit et qui rend chaque moment ensemble si naturel et si beau.</p></div>
+      <div class="reason-card"><span class="reason-icon">🔮</span><h4>Notre avenir</h4><p>Quand je pense à demain, à après-demain — c'est toujours avec toi que je le visualise.</p></div>
     </div>
   </div>
 
   <script>
-    // Cœurs flottants dans le hero
     const container = document.getElementById('heroFloat');
     const hearts = ['❤️','💕','💗','💖','🌹','💝'];
     function spawnHeart() {
-      const h = document.createElement('div');
-      h.className = 'fheart';
+      const h = document.createElement('div'); h.className='fheart';
       h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
-      h.style.left = Math.random()*100 + '%';
-      h.style.fontSize = (14+Math.random()*18) + 'px';
-      const dur = 6 + Math.random()*5;
-      h.style.animationDuration = dur + 's';
-      h.style.animationDelay = Math.random()*2 + 's';
-      container.appendChild(h);
-      setTimeout(() => h.remove(), (dur+3)*1000);
+      h.style.left = Math.random()*100+'%';
+      h.style.fontSize = (14+Math.random()*18)+'px';
+      const dur = 6+Math.random()*5;
+      h.style.animationDuration = dur+'s'; h.style.animationDelay = Math.random()*2+'s';
+      container.appendChild(h); setTimeout(()=>h.remove(),(dur+3)*1000);
     }
-    for(let i=0;i<6;i++) spawnHeart();
-    setInterval(spawnHeart, 1200);
+    for(let i=0;i<6;i++) spawnHeart(); setInterval(spawnHeart,1200);
   </script>
 </body>
 </html>

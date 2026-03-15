@@ -2,411 +2,154 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notre Monde 💖</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --rose: #e8547a;
-      --rose-pale: #f7a8be;
-      --rose-doux: #fde8ef;
-      --rose-profond: #c0325a;
-      --creme: #fff6f9;
-      --texte: #3d1a26;
+      --rose: #e8547a; --rose-pale: #f7a8be; --rose-doux: #fde8ef;
+      --rose-profond: #c0325a; --creme: #fff6f9; --texte: #3d1a26;
+      --sidebar-w: 240px;
     }
+    body, html { height: 100%; font-family: 'Lato', sans-serif; background: var(--creme); overflow-x: hidden; }
 
-    body, html {
-      height: 100vh;
-      font-family: 'Lato', sans-serif;
-      background: var(--creme);
-      display: flex;
-      overflow: hidden;
-    }
+    /* OVERLAY */
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 99; }
+    .overlay.open { display: block; }
 
-    /* ---- SIDEBAR ---- */
+    /* SIDEBAR */
     .sidebar {
-      width: 240px;
-      min-width: 240px;
+      width: var(--sidebar-w);
       background: linear-gradient(180deg, #e8547a 0%, #c0325a 100%);
-      display: flex;
-      flex-direction: column;
-      padding: 0;
-      position: relative;
-      overflow: hidden;
-      z-index: 10;
-    }
-
-    .sidebar::before {
-      content: '';
-      position: absolute;
-      top: -60px; left: -60px;
-      width: 200px; height: 200px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 50%;
-    }
-
-    .sidebar::after {
-      content: '';
-      position: absolute;
-      bottom: -80px; right: -80px;
-      width: 250px; height: 250px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 50%;
-    }
-
-    .sidebar-logo {
-      padding: 35px 25px 25px;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      position: relative;
-      z-index: 1;
-    }
-
-    .sidebar-logo .heart-icon {
-      font-size: 32px;
-      display: block;
-      margin-bottom: 8px;
-      animation: heartbeat 1.5s ease-in-out infinite;
-    }
-
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      14% { transform: scale(1.15); }
-      28% { transform: scale(1); }
-      42% { transform: scale(1.1); }
-      70% { transform: scale(1); }
-    }
-
-    .sidebar-logo span {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      color: white;
-      font-size: 18px;
-      opacity: 0.95;
-    }
-
-    .sidebar nav {
-      padding: 20px 15px;
-      flex: 1;
-      position: relative;
-      z-index: 1;
-    }
-
-    .sidebar a {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 13px 18px;
-      text-decoration: none;
-      color: rgba(255,255,255,0.9);
-      font-size: 15px;
-      font-weight: 400;
-      letter-spacing: 0.3px;
-      transition: all 0.25s;
-      border-radius: 12px;
-      margin-bottom: 4px;
-    }
-
-    .sidebar a:hover {
-      background: rgba(255,255,255,0.2);
-      color: white;
-      transform: translateX(4px);
-    }
-
-    .sidebar a.active {
-      background: rgba(255,255,255,0.25);
-      color: white;
-      font-weight: 700;
-    }
-
-    .sidebar a i {
-      width: 20px;
-      text-align: center;
-      font-size: 16px;
-    }
-
-    .sidebar-footer {
-      padding: 20px 25px;
-      border-top: 1px solid rgba(255,255,255,0.2);
-      font-size: 12px;
-      color: rgba(255,255,255,0.6);
-      text-align: center;
-      font-style: italic;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ---- CONTENT ---- */
-    .content {
-      flex: 1;
-      overflow-y: auto;
-      position: relative;
-    }
-
-    /* Pétales de fond */
-    .petals-bg {
-      position: fixed;
-      top: 0; right: 0;
-      width: calc(100vw - 240px);
-      height: 100vh;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .petal {
-      position: absolute;
-      font-size: 18px;
-      opacity: 0.12;
-      animation: petalFall linear infinite;
-    }
-
-    @keyframes petalFall {
-      0% { transform: translateY(-30px) rotate(0deg); opacity: 0; }
-      10% { opacity: 0.15; }
-      90% { opacity: 0.1; }
-      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-    }
-
-    /* Hero */
-    .hero {
-      position: relative;
-      z-index: 1;
-      padding: 70px 60px 50px;
-    }
-
-    .hero-label {
-      font-size: 12px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--rose);
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 56px;
-      color: var(--texte);
-      line-height: 1.15;
-      margin-bottom: 10px;
-    }
-
-    .hero h1 span {
-      color: var(--rose);
-      font-style: italic;
-    }
-
-    .hero-sub {
-      font-size: 17px;
-      color: #7a4458;
-      font-weight: 300;
-      line-height: 1.7;
-      max-width: 520px;
-      margin-top: 18px;
-    }
-
-    .hero-divider {
-      width: 60px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--rose), var(--rose-pale));
-      border-radius: 2px;
-      margin: 28px 0;
-    }
-
-    /* Cards grid */
-    .cards-grid {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 22px;
-      padding: 0 60px 60px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 28px;
-      border: 1px solid #f5d0dc;
-      box-shadow: 0 4px 20px rgba(200, 80, 120, 0.08);
-      transition: all 0.3s ease;
-      cursor: pointer;
-      text-decoration: none;
-      display: block;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--rose), var(--rose-pale));
-      transform: scaleX(0);
-      transform-origin: left;
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; bottom: 0;
+      z-index: 100; overflow: hidden;
       transition: transform 0.3s ease;
     }
+    .sidebar::before { content:''; position:absolute; top:-60px; left:-60px; width:200px; height:200px; background:rgba(255,255,255,0.08); border-radius:50%; }
+    .sidebar::after  { content:''; position:absolute; bottom:-80px; right:-80px; width:250px; height:250px; background:rgba(255,255,255,0.06); border-radius:50%; }
+    .sidebar-logo { padding: 35px 25px 25px; border-bottom: 1px solid rgba(255,255,255,0.2); position: relative; z-index: 1; }
+    .sidebar-logo .heart-icon { font-size:32px; display:block; margin-bottom:8px; animation: heartbeat 1.5s ease-in-out infinite; }
+    @keyframes heartbeat { 0%,100%{transform:scale(1)} 14%{transform:scale(1.15)} 28%{transform:scale(1)} 42%{transform:scale(1.1)} }
+    .sidebar-logo span { font-family:'Playfair Display',serif; font-style:italic; color:white; font-size:18px; }
+    .sidebar nav { padding:20px 15px; flex:1; position:relative; z-index:1; overflow-y:auto; }
+    .sidebar a { display:flex; align-items:center; gap:13px; padding:13px 18px; text-decoration:none; color:rgba(255,255,255,0.9); font-size:15px; transition:all 0.25s; border-radius:12px; margin-bottom:4px; }
+    .sidebar a:hover { background:rgba(255,255,255,0.2); color:white; transform:translateX(4px); }
+    .sidebar a.active { background:rgba(255,255,255,0.25); color:white; font-weight:700; }
+    .sidebar a i { width:20px; text-align:center; font-size:16px; }
+    .sidebar-footer { padding:20px 25px; border-top:1px solid rgba(255,255,255,0.2); font-size:12px; color:rgba(255,255,255,0.6); text-align:center; font-style:italic; position:relative; z-index:1; }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 35px rgba(200, 80, 120, 0.15);
+    /* TOPBAR MOBILE */
+    .topbar { display:none; position:fixed; top:0; left:0; right:0; height:60px; background:linear-gradient(90deg,#e8547a,#c0325a); align-items:center; padding:0 16px; z-index:98; box-shadow:0 2px 10px rgba(0,0,0,0.15); }
+    .topbar-menu-btn { background:none; border:none; color:white; font-size:22px; cursor:pointer; padding:8px; border-radius:8px; }
+    .topbar-title { font-family:'Playfair Display',serif; font-style:italic; color:white; font-size:20px; margin-left:12px; }
+    .topbar-heart { margin-left:auto; font-size:22px; animation:heartbeat 1.5s ease-in-out infinite; }
+
+    /* CONTENT */
+    .content { margin-left: var(--sidebar-w); min-height:100vh; overflow-y:auto; position:relative; }
+    .petals-bg { position:fixed; top:0; left:var(--sidebar-w); right:0; bottom:0; pointer-events:none; overflow:hidden; z-index:0; }
+    .petal { position:absolute; opacity:0.12; animation:petalFall linear infinite; }
+    @keyframes petalFall { 0%{transform:translateY(-30px) rotate(0deg);opacity:0} 10%{opacity:0.15} 90%{opacity:0.1} 100%{transform:translateY(100vh) rotate(360deg);opacity:0} }
+
+    /* HERO */
+    .hero { position:relative; z-index:1; padding:70px 60px 50px; }
+    .hero-label { font-size:12px; letter-spacing:3px; text-transform:uppercase; color:var(--rose); font-weight:700; margin-bottom:16px; }
+    .hero h1 { font-family:'Playfair Display',serif; font-size:56px; color:var(--texte); line-height:1.15; margin-bottom:10px; }
+    .hero h1 span { color:var(--rose); font-style:italic; }
+    .hero-sub { font-size:17px; color:#7a4458; font-weight:300; line-height:1.7; max-width:520px; margin-top:18px; }
+    .hero-divider { width:60px; height:3px; background:linear-gradient(90deg,var(--rose),var(--rose-pale)); border-radius:2px; margin:28px 0; }
+
+    /* COUNTER */
+    .counter-section { position:relative; z-index:1; margin:0 60px 24px; background:linear-gradient(135deg,var(--rose),var(--rose-profond)); border-radius:24px; padding:32px 40px; display:flex; align-items:center; justify-content:space-between; gap:20px; overflow:hidden; flex-wrap:wrap; }
+    .counter-section::before { content:'💕'; position:absolute; right:30px; top:15px; font-size:80px; opacity:0.15; }
+    .counter-text h2 { font-family:'Playfair Display',serif; font-size:20px; color:white; margin-bottom:6px; }
+    .counter-text p { color:rgba(255,255,255,0.75); font-size:13px; font-weight:300; }
+    .counter-numbers { display:flex; gap:10px; flex-wrap:wrap; }
+    .counter-block { text-align:center; background:rgba(255,255,255,0.15); padding:12px 16px; border-radius:12px; min-width:60px; }
+    .counter-block .num { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:white; line-height:1; display:block; }
+    .counter-block .lbl { font-size:9px; color:rgba(255,255,255,0.7); text-transform:uppercase; letter-spacing:1px; display:block; margin-top:3px; }
+
+    /* COUNTDOWN */
+    .countdown-section { position:relative; z-index:1; margin:0 60px 40px; background:white; border-radius:24px; border:1px solid #f5d0dc; box-shadow:0 4px 20px rgba(200,80,120,0.08); padding:28px 36px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; }
+    .countdown-left { display:flex; align-items:center; gap:14px; }
+    .countdown-icon { width:48px; height:48px; background:var(--rose-doux); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+    .countdown-text h3 { font-family:'Playfair Display',serif; font-size:17px; color:var(--texte); margin-bottom:3px; }
+    .countdown-text p { font-size:12px; color:#9b6070; font-weight:300; }
+    .countdown-numbers { display:flex; gap:8px; flex-wrap:wrap; }
+    .cd-block { text-align:center; background:var(--rose-doux); padding:10px 14px; border-radius:10px; min-width:54px; transition:all 0.3s; }
+    .cd-block .cd-num { font-family:'Playfair Display',serif; font-size:24px; font-weight:700; color:var(--rose); line-height:1; display:block; }
+    .cd-block .cd-lbl { font-size:9px; color:#b08090; text-transform:uppercase; letter-spacing:1px; display:block; margin-top:2px; }
+    .cd-block.celebrate { background:linear-gradient(135deg,#e8547a,#c0325a); }
+    .cd-block.celebrate .cd-num { color:white; }
+    .cd-block.celebrate .cd-lbl { color:rgba(255,255,255,0.8); }
+
+    /* CARDS */
+    .cards-grid { position:relative; z-index:1; display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px; padding:0 60px 50px; }
+    .card { background:white; border-radius:20px; padding:26px; border:1px solid #f5d0dc; box-shadow:0 4px 20px rgba(200,80,120,0.08); transition:all 0.3s; cursor:pointer; text-decoration:none; display:block; position:relative; overflow:hidden; }
+    .card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--rose),var(--rose-pale)); transform:scaleX(0); transform-origin:left; transition:transform 0.3s; }
+    .card:hover { transform:translateY(-5px); box-shadow:0 12px 35px rgba(200,80,120,0.15); }
+    .card:hover::before { transform:scaleX(1); }
+    .card-icon { width:48px; height:48px; background:var(--rose-doux); border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:20px; margin-bottom:14px; }
+    .card h3 { font-family:'Playfair Display',serif; font-size:19px; color:var(--texte); margin-bottom:7px; }
+    .card p { font-size:13px; color:#9b6070; line-height:1.6; font-weight:300; }
+
+    /* QUOTE */
+    .quote-section { position:relative; z-index:1; margin:0 60px 60px; padding:30px 34px; background:white; border-radius:20px; border:1px solid #f5d0dc; box-shadow:0 4px 20px rgba(200,80,120,0.08); }
+    .quote-label { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--rose-pale); font-weight:700; margin-bottom:12px; }
+    .quote-section blockquote { font-family:'Playfair Display',serif; font-style:italic; font-size:20px; color:var(--texte); line-height:1.6; border-left:3px solid var(--rose-pale); padding-left:18px; }
+    .quote-author { margin-top:10px; font-size:13px; color:var(--rose-pale); text-align:right; font-weight:300; letter-spacing:1px; }
+
+    .content::-webkit-scrollbar { width:5px; }
+    .content::-webkit-scrollbar-track { background:var(--rose-doux); }
+    .content::-webkit-scrollbar-thumb { background:var(--rose-pale); border-radius:10px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .topbar { display: flex; }
+      .content { margin-left: 0; padding-top: 60px; }
+      .petals-bg { left: 0; }
+      .hero { padding: 28px 18px 20px; }
+      .hero h1 { font-size: 34px; }
+      .hero-sub { font-size: 14px; }
+      .counter-section { margin: 0 14px 18px; padding: 20px 18px; }
+      .counter-text h2 { font-size: 14px; }
+      .counter-numbers { justify-content: center; width: 100%; }
+      .countdown-section { margin: 0 14px 28px; padding: 18px; flex-direction: column; align-items: flex-start; }
+      .countdown-numbers { width: 100%; justify-content: center; }
+      .cards-grid { grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 14px 36px; }
+      .card { padding: 16px; }
+      .card h3 { font-size: 15px; }
+      .quote-section { margin: 0 14px 36px; padding: 20px 18px; }
+      .quote-section blockquote { font-size: 16px; }
     }
-
-    .card:hover::before {
-      transform: scaleX(1);
+    @media (max-width: 400px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 28px; }
     }
-
-    .card-icon {
-      width: 50px; height: 50px;
-      background: var(--rose-doux);
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px;
-      margin-bottom: 16px;
-    }
-
-    .card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      color: var(--texte);
-      margin-bottom: 8px;
-    }
-
-    .card p {
-      font-size: 14px;
-      color: #9b6070;
-      line-height: 1.6;
-      font-weight: 300;
-    }
-
-    /* Compteur */
-    .counter-section {
-      position: relative;
-      z-index: 1;
-      margin: 0 60px 40px;
-      background: linear-gradient(135deg, var(--rose) 0%, var(--rose-profond) 100%);
-      border-radius: 24px;
-      padding: 36px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      overflow: hidden;
-    }
-
-    .counter-section::before {
-      content: '💕';
-      position: absolute;
-      right: 30px; top: 15px;
-      font-size: 80px;
-      opacity: 0.15;
-    }
-
-    .counter-text h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 26px;
-      color: white;
-      margin-bottom: 6px;
-    }
-
-    .counter-text p {
-      color: rgba(255,255,255,0.75);
-      font-size: 14px;
-      font-weight: 300;
-    }
-
-    .counter-numbers {
-      display: flex;
-      gap: 20px;
-    }
-
-    .counter-block {
-      text-align: center;
-      background: rgba(255,255,255,0.15);
-      padding: 16px 22px;
-      border-radius: 14px;
-      min-width: 70px;
-    }
-
-    .counter-block .num {
-      font-family: 'Playfair Display', serif;
-      font-size: 36px;
-      font-weight: 700;
-      color: white;
-      line-height: 1;
-      display: block;
-    }
-
-    .counter-block .lbl {
-      font-size: 11px;
-      color: rgba(255,255,255,0.7);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      display: block;
-      margin-top: 5px;
-    }
-
-    /* Message du jour */
-    .quote-section {
-      position: relative;
-      z-index: 1;
-      margin: 0 60px 60px;
-      padding: 32px 36px;
-      background: white;
-      border-radius: 20px;
-      border: 1px solid #f5d0dc;
-      box-shadow: 0 4px 20px rgba(200, 80, 120, 0.08);
-    }
-
-    .quote-section .quote-label {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--rose-pale);
-      font-weight: 700;
-      margin-bottom: 14px;
-    }
-
-    .quote-section blockquote {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 22px;
-      color: var(--texte);
-      line-height: 1.6;
-      border-left: 3px solid var(--rose-pale);
-      padding-left: 20px;
-    }
-
-    .quote-section .quote-author {
-      margin-top: 12px;
-      font-size: 13px;
-      color: var(--rose-pale);
-      text-align: right;
-      font-weight: 300;
-      letter-spacing: 1px;
-    }
-
-    /* Scrollbar */
-    .content::-webkit-scrollbar { width: 5px; }
-    .content::-webkit-scrollbar-track { background: var(--rose-doux); }
-    .content::-webkit-scrollbar-thumb { background: var(--rose-pale); border-radius: 10px; }
   </style>
 </head>
 <body>
 
-  <div class="sidebar">
+  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+  <div class="topbar">
+    <button class="topbar-menu-btn" onclick="openSidebar()"><i class="fa-solid fa-bars"></i></button>
+    <span class="topbar-title">Notre Monde</span>
+    <span class="topbar-heart">💖</span>
+  </div>
+
+  <div class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <span class="heart-icon">💖</span>
       <span>Notre Monde</span>
     </div>
     <nav>
-      <a href="menu.html" class="active"><i class="fa-solid fa-house"></i> Accueil</a>
+      <a href="index.html" class="active"><i class="fa-solid fa-house"></i> Accueil</a>
       <a href="you.html"><i class="fa-solid fa-heart"></i> Pour toi</a>
-      <a href="photos.html"><i class="fa-regular fa-images"></i> Nos souvenirs</a>
       <a href="tableau.html"><i class="fa-solid fa-calendar-heart"></i> Notre histoire</a>
       <a href="lettre.html"><i class="fa-regular fa-envelope-open-text"></i> Lettre d'amour</a>
       <a href="secret.html"><i class="fa-solid fa-lock"></i> Secret 🔐</a>
@@ -418,115 +161,126 @@
   <div class="petals-bg" id="petalsBg"></div>
 
   <div class="content">
-
     <div class="hero">
       <p class="hero-label">Bienvenue dans</p>
       <h1>Notre <span>petit monde</span> à nous</h1>
       <div class="hero-divider"></div>
-      <p class="hero-sub">
-        Mon petit cœur, ce site c'est pour toi. Chaque page, chaque mot, chaque détail — tout a été pensé pour te montrer combien tu comptes pour moi. 💕
-      </p>
+      <p class="hero-sub">Mon petit cœur, ce site c'est pour toi. Chaque page, chaque mot, chaque détail — tout a été pensé pour te montrer combien tu comptes pour moi. 💕</p>
     </div>
 
     <div class="counter-section">
       <div class="counter-text">
         <h2>Ensemble depuis le 17 Septembre 2025</h2>
-        <p>Chaque jour avec toi est un cadeau</p>
+        <p>Chaque seconde avec toi est un cadeau 💕</p>
       </div>
-      <div class="counter-numbers" id="counterNums">
-        <div class="counter-block">
-          <span class="num" id="cntJours">0</span>
-          <span class="lbl">Jours</span>
+      <div class="counter-numbers">
+        <div class="counter-block"><span class="num" id="cntJours">0</span><span class="lbl">Jours</span></div>
+        <div class="counter-block"><span class="num" id="cntHeures">0</span><span class="lbl">Heures</span></div>
+        <div class="counter-block"><span class="num" id="cntMins">0</span><span class="lbl">Min</span></div>
+        <div class="counter-block"><span class="num" id="cntSecs">0</span><span class="lbl">Sec</span></div>
+      </div>
+    </div>
+
+    <div class="countdown-section">
+      <div class="countdown-left">
+        <div class="countdown-icon">💝</div>
+        <div class="countdown-text">
+          <h3 id="cdTitle">Prochain anniversaire mensuel</h3>
+          <p id="cdSub">Dans combien de temps… 💕</p>
         </div>
-        <div class="counter-block">
-          <span class="num" id="cntHeures">0</span>
-          <span class="lbl">Heures</span>
-        </div>
-        <div class="counter-block">
-          <span class="num" id="cntMins">0</span>
-          <span class="lbl">Minutes</span>
-        </div>
+      </div>
+      <div class="countdown-numbers">
+        <div class="cd-block" id="cdJ"><span class="cd-num" id="cdJn">0</span><span class="cd-lbl">Jours</span></div>
+        <div class="cd-block" id="cdH"><span class="cd-num" id="cdHn">0</span><span class="cd-lbl">Heures</span></div>
+        <div class="cd-block" id="cdM"><span class="cd-num" id="cdMn">0</span><span class="cd-lbl">Min</span></div>
+        <div class="cd-block" id="cdS"><span class="cd-num" id="cdSn">0</span><span class="cd-lbl">Sec</span></div>
       </div>
     </div>
 
     <div class="cards-grid">
-      <a href="you.html" class="card">
-        <div class="card-icon">💕</div>
-        <h3>Pour toi</h3>
-        <p>Un message venant du fond de mon cœur, rien que pour toi mon amour.</p>
-      </a>
-      <a href="tableau.html" class="card">
-        <div class="card-icon">📅</div>
-        <h3>Notre histoire</h3>
-        <p>Nos mois ensemble, nos dates importantes, nos souvenirs marqués à jamais.</p>
-      </a>
-      <a href="lettre.html" class="card">
-        <div class="card-icon">💌</div>
-        <h3>Lettre d'amour</h3>
-        <p>Ce que les mots peinent parfois à dire, je te l'écris ici avec tout mon cœur.</p>
-      </a>
-      <a href="secret.html" class="card">
-        <div class="card-icon">🔐</div>
-        <h3>Boîte secrète</h3>
-        <p>Une surprise cachée rien que pour toi. Tu connais le mot magique ?</p>
-      </a>
+      <a href="you.html" class="card"><div class="card-icon">💕</div><h3>Pour toi</h3><p>Un message venant du fond de mon cœur, rien que pour toi mon amour.</p></a>
+      <a href="tableau.html" class="card"><div class="card-icon">📅</div><h3>Notre histoire</h3><p>Nos mois ensemble, nos dates importantes, nos souvenirs marqués à jamais.</p></a>
+      <a href="lettre.html" class="card"><div class="card-icon">💌</div><h3>Lettre d'amour</h3><p>Ce que les mots peinent parfois à dire, je te l'écris ici avec tout mon cœur.</p></a>
+      <a href="secret.html" class="card"><div class="card-icon">🔐</div><h3>Boîte secrète</h3><p>Une surprise cachée rien que pour toi. Tu connais le mot magique ?</p></a>
     </div>
 
     <div class="quote-section">
       <p class="quote-label">Citation du jour</p>
-      <blockquote id="quoteText">
-        "L'amour, ce n'est pas se regarder l'un l'autre, c'est regarder ensemble dans la même direction."
-      </blockquote>
-      <p class="quote-author">— Antoine de Saint-Exupéry</p>
+      <blockquote id="quoteText">"…"</blockquote>
+      <p class="quote-author" id="quoteAuthor">—</p>
     </div>
-
   </div>
 
   <script>
-    // Compteur depuis le 17/09/2025
+    function openSidebar()  { document.getElementById('sidebar').classList.add('open');    document.getElementById('overlay').classList.add('open'); }
+    function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); }
+
+    // Compteur depuis le début
     function updateCounter() {
-      const start = new Date('2025-09-17T00:00:00');
-      const now = new Date();
-      const diff = now - start;
-      const jours = Math.floor(diff / (1000*60*60*24));
-      const heures = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-      const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
-      document.getElementById('cntJours').textContent = jours;
-      document.getElementById('cntHeures').textContent = heures;
-      document.getElementById('cntMins').textContent = mins;
+      const diff = Date.now() - new Date('2025-09-17T00:00:00').getTime();
+      document.getElementById('cntJours').textContent  = Math.floor(diff/86400000);
+      document.getElementById('cntHeures').textContent = Math.floor((diff%86400000)/3600000);
+      document.getElementById('cntMins').textContent   = Math.floor((diff%3600000)/60000);
+      document.getElementById('cntSecs').textContent   = Math.floor((diff%60000)/1000);
     }
-    updateCounter();
-    setInterval(updateCounter, 30000);
+    updateCounter(); setInterval(updateCounter, 1000);
+
+    // Compte à rebours prochain 17
+    const moisFr = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    function getNext17() {
+      const now = new Date();
+      let y = now.getFullYear(), m = now.getMonth();
+      let next = new Date(y, m, 17, 0, 0, 0);
+      if (now >= next) { m++; if(m>11){m=0;y++;} next = new Date(y,m,17,0,0,0); }
+      return next;
+    }
+    function updateCountdown() {
+      const next = getNext17();
+      const diff = next - Date.now();
+      const today = new Date();
+      const isToday = today.getDate()===17;
+
+      if (isToday && diff <= 86400000) {
+        document.getElementById('cdTitle').textContent = '🎉 Joyeux anniversaire mensuel !';
+        document.getElementById('cdSub').textContent = "Aujourd'hui c'est notre jour 💖";
+        ['cdJ','cdH','cdM','cdS'].forEach(id => { document.getElementById(id).classList.add('celebrate'); });
+        ['cdJn','cdHn','cdMn','cdSn'].forEach(id => { document.getElementById(id).textContent = '🎉'; });
+        return;
+      }
+      document.getElementById('cdTitle').textContent = `Prochain 17 — ${moisFr[next.getMonth()]} ${next.getFullYear()}`;
+      document.getElementById('cdSub').textContent = 'Notre prochain anniversaire mensuel 💕';
+      document.getElementById('cdJn').textContent = Math.floor(diff/86400000);
+      document.getElementById('cdHn').textContent = Math.floor((diff%86400000)/3600000);
+      document.getElementById('cdMn').textContent = Math.floor((diff%3600000)/60000);
+      document.getElementById('cdSn').textContent = Math.floor((diff%60000)/1000);
+    }
+    updateCountdown(); setInterval(updateCountdown, 1000);
 
     // Pétales
     const petalsBg = document.getElementById('petalsBg');
     const emojis = ['🌸','💗','🌺','💕','❤️','🌹','💖'];
     function createPetal() {
-      const p = document.createElement('div');
-      p.className = 'petal';
+      const p = document.createElement('div'); p.className='petal';
       p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-      p.style.left = Math.random()*100 + '%';
-      p.style.fontSize = (12 + Math.random()*14) + 'px';
-      const dur = 12 + Math.random()*10;
-      p.style.animationDuration = dur + 's';
-      p.style.animationDelay = Math.random()*5 + 's';
-      petalsBg.appendChild(p);
-      setTimeout(() => p.remove(), (dur+5)*1000);
+      p.style.left = Math.random()*100+'%';
+      p.style.fontSize = (12+Math.random()*14)+'px';
+      const dur = 12+Math.random()*10;
+      p.style.animationDuration = dur+'s'; p.style.animationDelay = Math.random()*5+'s';
+      petalsBg.appendChild(p); setTimeout(()=>p.remove(),(dur+5)*1000);
     }
-    for(let i=0; i<8; i++) createPetal();
-    setInterval(createPetal, 2000);
+    for(let i=0;i<8;i++) createPetal(); setInterval(createPetal,2000);
 
-    // Citations aléatoires
+    // Citations
     const quotes = [
-      { text: "L'amour, ce n'est pas se regarder l'un l'autre, c'est regarder ensemble dans la même direction.", author: "Antoine de Saint-Exupéry" },
-      { text: "Je t'aime non pas pour ce que tu es, mais pour ce que je suis quand je suis avec toi.", author: "Roy Croft" },
-      { text: "On n'aime bien qu'une seule fois, c'est la première fois. Les amours qui suivent sont moins involontaires.", author: "La Bruyère" },
-      { text: "Aimer c'est trouver dans le bonheur d'un autre son propre bonheur.", author: "Leibniz" },
-      { text: "Le plus grand bonheur de la vie, c'est la conviction qu'on est aimé.", author: "Victor Hugo" }
+      {text:"L'amour, ce n'est pas se regarder l'un l'autre, c'est regarder ensemble dans la même direction.",author:"Antoine de Saint-Exupéry"},
+      {text:"Je t'aime non pas pour ce que tu es, mais pour ce que je suis quand je suis avec toi.",author:"Roy Croft"},
+      {text:"Aimer c'est trouver dans le bonheur d'un autre son propre bonheur.",author:"Leibniz"},
+      {text:"Le plus grand bonheur de la vie, c'est la conviction qu'on est aimé.",author:"Victor Hugo"},
+      {text:"On n'aime bien qu'une seule fois, c'est la première fois.",author:"La Bruyère"}
     ];
     const q = quotes[Math.floor(Math.random()*quotes.length)];
-    document.getElementById('quoteText').textContent = '"' + q.text + '"';
-    document.querySelector('.quote-author').textContent = '— ' + q.author;
+    document.getElementById('quoteText').textContent = '"'+q.text+'"';
+    document.getElementById('quoteAuthor').textContent = '— '+q.author;
   </script>
 </body>
 </html>

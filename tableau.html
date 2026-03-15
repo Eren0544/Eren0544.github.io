@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notre Histoire 💖</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -300,6 +301,39 @@
       font-size: 18px; transition: all 0.3s;
     }
     .back-btn:hover { transform: scale(1.1); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .back-btn { top: 12px; left: 12px; width: 40px; height: 40px; font-size: 15px; }
+      .page-header { padding: 50px 20px 60px; }
+      .page-header h1 { font-size: 34px; }
+      .tab-btn { padding: 14px 16px; font-size: 13px; }
+      .timeline-section { padding: 0 14px; margin-top: 30px; }
+      .timeline { padding-left: 36px; }
+      .timeline-card { padding: 14px 16px; }
+      .timeline-card h3 { font-size: 16px; }
+      .calendar-section { padding: 36px 14px 60px; }
+      .section-title { font-size: 26px; }
+      .calendar-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+      .month-header h2 { font-size: 16px; }
+      .month-header .month-emoji { font-size: 18px; }
+      th, td { padding: 5px 2px; font-size: 12px; }
+      .special { width: 26px; height: 26px; font-size: 12px; }
+      .special::after { top: -12px; font-size: 8px; }
+      .photos-section { padding: 36px 14px 60px; }
+      .section-title { font-size: 26px; }
+      .upload-controls { flex-direction: column; gap: 8px; }
+      .upload-zone { padding: 24px 16px; }
+      .upload-zone h3 { font-size: 17px; }
+      .photo-grid { columns: 2; }
+      .photo-filters { gap: 6px; }
+      .filter-btn { padding: 7px 12px; font-size: 12px; }
+    }
+    @media (max-width: 420px) {
+      .calendar-grid { grid-template-columns: 1fr; }
+      .photo-grid { columns: 1; }
+      .tab-btn { padding: 12px 10px; font-size: 12px; }
+    }
   </style>
 </head>
 <body>
